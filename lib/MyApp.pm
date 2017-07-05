@@ -45,6 +45,12 @@ __PACKAGE__->config(
 # Start the application
 __PACKAGE__->setup();
 
+# Flush logging outputs when running inside Docker containers
+if ( -e "/.dockerenv" and __PACKAGE__->log->isa('Catalyst::Log') ) {
+    STDOUT->autoflush;
+    STDERR->autoflush;
+}
+
 =encoding utf8
 
 =head1 NAME
